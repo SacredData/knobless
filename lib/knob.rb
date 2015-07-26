@@ -1,6 +1,4 @@
 # knob.rb
-require "rubygems"
-require "bundler/setup"
 require "pathname"
 require "json"
 

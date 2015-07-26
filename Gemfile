@@ -3,4 +3,5 @@ gem 'sinatra'
 gem 'unicorn'
 gem 'rspec', :require => 'spec'
 gem 'pry'
+gem 'haml'
 

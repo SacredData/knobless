@@ -3,6 +3,8 @@ GEM
   specs:
     coderay (1.1.0)
     diff-lcs (1.2.5)
+    haml (4.0.6)
+      tilt
     kgio (2.9.3)
     method_source (0.8.2)
     pry (0.10.1)
@@ -41,6 +43,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  haml
   pry
   rspec
   sinatra
