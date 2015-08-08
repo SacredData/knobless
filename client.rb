@@ -11,17 +11,22 @@ get "/upload" do
 end
 
 post "/upload" do
+  tries = 0
   begin
-    path = Pathname.new(params['myfile'][:tempfile])
-    k    = Knob.new("#{path.dirname}/#{path.basename}")
-    msg  = k.scan
+    tries += 1
+    path  = Pathname.new(params['myfile'][:tempfile])
+    file  = File.open(path)
+    unless file.none?
+      k   = Knob.new("#{path.dirname}/#{path.basename}")
+      msg = k.scan
+    end
   rescue Exception => e
     puts e
     retry while tries < 5
   ensure
     k = nil
   end
-  msg
+  JSON.pretty_generate(JSON.parse(msg)) unless msg.nil?
 end
 
 get "/hi" do

@@ -8,7 +8,8 @@ class Knob
     @file_path  = Pathname.new(@file.path)
     @file_score = 0
     @levelvals  = {:flat => 1.0, :crest => 6.0, :peak => -3.0, :rmsl => -34.0, :rmsh => -20.0}
-    @encodevals = {:sampleEnc => [16,24], :sampleDep => [16,24], :sampleRate => [44100,48000,96000], :channels => [2], :length => 7199}
+    @encodevals = {:sampleEnc => [16,24], :sampleDep => [16,24], :sampleRate => 
+                  [44100,48000,96000], :channels => [2], :length => 7199}
     @issues     = []
   end
   attr_reader :file, :file_path, :file_score
