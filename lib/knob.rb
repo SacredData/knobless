@@ -3,14 +3,16 @@ require "pathname"
 require "json"
 
 class Knob
-  def initialize(wavfile)
+  def initialize(wavfile,source)
     @file       = File.open("#{wavfile}","r")
     @file_path  = Pathname.new(@file.path)
+    @source     = source
     @file_score = 0
     @levelvals  = {:flat => 1.0, :crest => 6.0, :peak => -3.0, :rmsl => -34.0, :rmsh => -20.0}
     @encodevals = {:sampleEnc => [16,24], :sampleDep => [16,24], :sampleRate => 
                   [44100,48000,96000], :channels => [2], :length => 7199}
     @issues     = []
+    @validation = false
   end
   attr_reader :file, :file_path, :file_score
   def scan
@@ -43,9 +45,8 @@ class Knob
     score
   end
   attr_reader :sampleEnc, :sampleDep, :sampleRate, :channels, :lossless
-  attr_reader :flat, :crest, :peak, :rms, :seconds, :issues
   def score # TODO: Add a check for top/tail padding; add 15 to score if both are adaquate. 5 if only one.
-    if @lossless == true # If the file isn't lossless, there's literally no reason to master it.
+    if @lossless == true
     # Audio encoding compliance scoring
       @file_score += 40 if 
         @encodevals[:sampleRate].any? {|rate| rate == "#{@sampleRate}".to_i} == true &&
@@ -68,7 +69,9 @@ class Knob
     else 
       @file_score = 0
     end
-    return {:file => "#{@file_path}", :score => @file_score,
-            :enc  => @enc, :stats => @stats}.to_json
+    @validation = true if @file_score >= 60
+    return {:file => "#{@source}", :pass => "#{@validation}",
+            :score => @file_score, :enc  => @enc, :stats => @stats}.to_json
   end
+  attr_reader :pass, :flat, :crest, :peak, :rms, :seconds, :issues
 end

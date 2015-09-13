@@ -1,0 +1,52 @@
+%html
+  %body
+    %h1 Audio Mix QC Results
+    %br
+    %br
+    - @tracks.each do |results|
+      %h2= results[3]
+      %br
+      %h3 GENERAL
+      %table{:display => 'inline-block', :border => 1}
+        %tbody
+          %tr
+            %th File
+            %th Score
+            %th Passed?
+            %tr
+              %td= results[0][:name]
+              %td= results[0][:score]
+              %td= results[0][:pass]
+      %h3 ENCODING MEASUREMENTS
+      %table{:display => 'inline-block', :border => 1}
+        %tbody
+          %tr
+            %th Bit Depth
+            %th Sampling Frequency
+            %th Channel Count
+            %th Lossless?
+            %tr
+              %td= results[1][:depth]
+              %td= results[1][:rate]
+              %td= results[1][:channels]
+              %td= results[1][:lossless]
+      %h3 AUDIO MEASUREMENTS
+      %table{:display => 'inline-block', :border => 1}
+        %tbody
+          %tr
+            %th Peak (dB FS)
+            %th RMS (dB RMS)
+            %th Flat Rate
+            %th Crest Factor
+            %tr
+              %td= results[2][:peak]
+              %td= results[2][:rms]
+              %td= results[2][:flat]
+              %td= results[2][:crest]
+      %br
+      %br
+      - if @pass == "false"
+        = "THIS TRACK DID NOT PASS. Send an email to andrew@sacreddata.io for help with this file."
+      %br
+      %br
+      %br

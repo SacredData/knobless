@@ -1,8 +1,14 @@
 %html
   %body
-    %h1 Audio QC File Uploader!
+    %h1 {SD} Audio Mix Validator!
+    To validate your upcoming SD project, simply select one or more audio files, then click the Upload button.
+    %br
+    A score of 60 or higher indicates a passing grade.
+    %br
+    %br
     %form(method="post" enctype='multipart/form-data')
-      %input(type='file' name='myfile')
+      %input{:type => "file", :multiple => "true", :name => "myfiles[]"}
       %br
       %br
       %input(type='submit' value='Upload!')
+      %br
