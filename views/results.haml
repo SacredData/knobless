@@ -36,7 +36,7 @@
           %tr
             %th Peak (dB FS)
             %th RMS (dB RMS)
-            %th Flat Rate
+            %th Flat Factor
             %th Crest Factor
             %tr
               %td= results[2][:peak]
@@ -45,7 +45,7 @@
               %td= results[2][:crest]
       %br
       %br
-      - if @pass == "false"
+      - if results[0][:pass] == false
         = "THIS TRACK DID NOT PASS. We cannot auto-master this file yet."
       %br
       %h3= results[4]

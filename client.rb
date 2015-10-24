@@ -46,13 +46,20 @@ post "/upload" do
           @issues_str += "This file's length is too short! "
         end
         if issue =~ /lossy/
-          @issues_str += "This file is not lossless! Please upload a WAV, FLAC, or AIFF. "
+          @issues_str += "[LOSSY ERROR] This file is not lossless! Please upload a WAV, FLAC, or AIFF. "
+        end
+        if issue =~ /flat/
+          @issues_str += "[FLAT FACTOR ERROR] This file contains audible distortion! "
+        end
+        if issue =~ /crest/
+          @issues_str += "[CREST FACTOR ERROR] This file's crest is too high. Audio levels must be reduced to achieve greater dynamic range. "
         end
         if issue =~ /rms/
-          @issues_str += "This file's RMS is too high. Please reduce levels to achieve an ideal dynamic range. "
+          @issues_str += "[RMS ERROR] This file's RMS is too high. Please reduce levels to achieve an ideal dynamic range. "
         end
         if issue =~ /peaks/
-          @issues_str += "This file is peaking above -3.0 dBFS. Please reduce levels to achieve ideal peak levels. "
+          @issues_str += "[PEAK ERROR] This file is peaking above -3.0 dBFS. "
+          @issues_str += "(We will fix this for you.) " if @issues.length < 2
         end
       end
       @gen         = {:name => @source_name, :pass => @pass, :score => @score}
