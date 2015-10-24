@@ -39,6 +39,22 @@ post "/upload" do
       @source_name = jmsg["file"]
       @pass        = jmsg["pass"]
       @score       = jmsg["score"]
+      @issues      = jmsg["issues"]
+      @issues_str  = ""
+      @issues.each do |issue|
+        if issue =~ /length/
+          @issues_str += "This file's length is too short! "
+        end
+        if issue =~ /lossy/
+          @issues_str += "This file is not lossless! Please upload a WAV, FLAC, or AIFF. "
+        end
+        if issue =~ /rms/
+          @issues_str += "This file's RMS is too high. Please reduce levels to achieve an ideal dynamic range. "
+        end
+        if issue =~ /peaks/
+          @issues_str += "This file is peaking above -3.0 dBFS. Please reduce levels to achieve ideal peak levels. "
+        end
+      end
       @gen         = {:name => @source_name, :pass => @pass, :score => @score}
       # ENCODING INFORMATION
       @encdata     = jmsg["enc"]
@@ -55,7 +71,7 @@ post "/upload" do
       @peak        = @statsdata["peak"]
       @rms         = @statsdata["rms"]
       @stats       = {:peak => @peak, :rms => @rms, :flat => @flat, :crest => @crest}
-      @tracks.push([@gen,@enc,@stats,counter])
+      @tracks.push([@gen, @enc, @stats, counter, @issues_str])
     end
   }
   @tracks.each do |track_info|
