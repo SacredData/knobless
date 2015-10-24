@@ -19,10 +19,10 @@ post "/upload" do
     counter += 1
     begin
       tries   += 1
-      path  = Pathname.new(file[:tempfile])
-      name  = file[:filename]
-      file  = File.open(path)
-      unless file.none?
+      path     = Pathname.new(file[:tempfile])
+      name     = file[:filename]
+      upfile   = File.open(path)
+      unless upfile.none?
         k   = Knob.new("#{path.dirname}/#{path.basename}",name)
         msg = k.scan
         puts "File #{counter}: #{path} ---- SCANNED"
