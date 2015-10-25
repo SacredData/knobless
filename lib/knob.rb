@@ -15,7 +15,7 @@ class Knob
   end
   attr_reader :file, :file_path, :file_score
   def scan
-    puts "Audio encoding compliance scanning"
+    # Audio encoding compliance scanning
     counter      = 1
     soxi_checks  = ["-t","-r","-c","-D","-b"]
     encCmd       = []
@@ -31,7 +31,7 @@ class Knob
     end
     @enc = {:sample_encoding => "#{encCmd[5]}".to_i, :sample_depth => "#{encCmd[5]}".to_i, 
      :sample_rate => "#{encCmd[2]}".to_i, :channels => "#{encCmd[3]}".to_i, :lossless => @lossless}
-    puts "Audio dynamics measurement scanning"
+    # Audio dynamics measurement scanning
     statsCmd = `sox "#{@file_path}" -n stats 2>&1`
     @seconds = "#{statsCmd.split("\n")[-3]}".match(/\d+.\d+/)[0].to_f   # length in seconds
     @flat    = "#{statsCmd.split("\n")[-7]}".match(/\d+.\d+/)[0].to_f   # number of samples that hit 0dBFS
@@ -40,21 +40,21 @@ class Knob
     @peak    = "#{statsCmd.split("\n")[-12]}".match(/-?\d+.\d+/)[0].to_f # loudest measured sample in the file
     @stats = {:flat => @flat, :crest => @crest, :peak => @peak, :rms => @rms,
               :seconds => @seconds}
-    puts "Warnings"
+    # Warnings
     @issues.push("rms_high")   if "#{@rms}".to_f > -16.0
     @issues.push("peaks")      if "#{@peak}".to_f > -4.0
     score
   end
   attr_reader :sampleEnc, :sampleDep, :sampleRate, :channels, :stats
   def score
-    puts "Audio encoding compliance scoring"
+    # Audio encoding compliance scoring
     @file_score += 10 if @lossless == true
     @file_score += 10 if 
       @encodevals[:sampleRate].any? {|rate| rate == "#{@sampleRate}".to_i} == true &&
       @encodevals[:sampleEnc].any?  {|enc| enc == "#{@sampleEnc}".to_i}    == true &&
       @encodevals[:sampleDep].any?  {|dep| dep == "#{@sampleDep}".to_i}    == true &&
       @encodevals[:channels].any?   {|chan| chan == "#{@channels}".to_i}   == true
-    puts "Audio dynamics measurement scoring"
+    # Audio dynamics measurement scoring
     if "#{@flat}".to_f  < @levelvals[:flat]
       @file_score   += 10
     else
@@ -67,7 +67,7 @@ class Knob
     end
     @file_score   += 10 if "#{@peak}".to_f  < @levelvals[:peak]
     @file_score   += 15 if "#{@rms}".to_f   < @levelvals[:rms]    
-    puts "Finish up and return json msg"   
+    # Finish up and return json msg
     if @file_score  >= 40
       @validation = true
     else
