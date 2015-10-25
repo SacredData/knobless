@@ -41,25 +41,32 @@ post "/upload" do
       @score       = jmsg["score"]
       @issues      = jmsg["issues"]
       @issues_str  = ""
+      issue_count = 0
       @issues.each do |issue|
         if issue =~ /length/
-          @issues_str += "This file's length is too short! "
+          issue_count += 1
+          @issues_str += "#{issue_count}: This file's length is too short! "
         end
         if issue =~ /lossy/
-          @issues_str += "[LOSSY ERROR] This file is not lossless! Please upload a WAV, FLAC, or AIFF. "
+          issue_count += 1
+          @issues_str += "#{issue_count}: [LOSSY ERROR] This file is not lossless! Please upload a WAV, FLAC, or AIFF. "
         end
         if issue =~ /flat/
-          @issues_str += "[FLAT FACTOR ERROR] This file contains audible distortion! "
+          issue_count += 1
+          @issues_str += "#{issue_count}: [FLAT FACTOR ERROR] This file contains audible distortion! "
         end
         if issue =~ /crest/
-          @issues_str += "[CREST FACTOR ERROR] This file's crest is too high. Audio levels must be reduced to achieve greater dynamic range. "
+          issue_count += 1
+          @issues_str += "#{issue_count}: [CREST FACTOR ERROR] This file's crest is too high. Audio levels must be reduced to achieve greater dynamic range. "
         end
         if issue =~ /rms/
-          @issues_str += "[RMS ERROR] This file's RMS is too high. Please reduce levels to achieve an ideal dynamic range. "
+          issue_count += 1
+          @issues_str += "#{issue_count}: [RMS ERROR] This file's RMS is too high. Please reduce levels to achieve an ideal dynamic range. "
         end
         if issue =~ /peaks/
-          @issues_str += "[PEAK ERROR] This file is peaking above -3.0 dBFS. "
-          @issues_str += "(We will fix this for you.) " if @issues.length < 2
+          issue_count += 1
+          @issues_str += "#{issue_count}: [PEAK ERROR] This file is peaking above -3.0 dBFS. "
+          @issues_str += "(We will fix this for you. No action is required.) " if @issues.length < 2
         end
       end
       @gen         = {:name => @source_name, :pass => @pass, :score => @score}
