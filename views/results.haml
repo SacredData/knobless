@@ -1,54 +1,59 @@
 %html
+  %head
+    %title Validation Results
+    %link(rel="stylesheet" href="http://yui.yahooapis.com/2.8.0r4/build/reset/reset-min.css")
+    %link(rel="stylesheet" href="css/style.css")
   %body
-    %center
-    %h1 Audio Mix QC Results
-    %br
-    %br
-    - @tracks.each do |results|
-      %h2= results[3]
-      %br
-      %h3 GENERAL
-      %table{:display => 'inline-block', :border => 1}
-        %tbody
-          %tr
-            %th File
-            %th Score
-            %th Passed?
-            %tr
-              %td= results[0][:name]
-              %td= results[0][:score]
-              %td= results[0][:pass]
-      %h3 ENCODING MEASUREMENTS
-      %table{:display => 'inline-block', :border => 1}
-        %tbody
-          %tr
-            %th Bit Depth
-            %th Sampling Frequency
-            %th Channel Count
-            %th Lossless?
-            %tr
-              %td= results[1][:depth]
-              %td= results[1][:rate]
-              %td= results[1][:channels]
-              %td= results[1][:lossless]
-      %h3 AUDIO MEASUREMENTS
-      %table{:display => 'inline-block', :border => 1}
-        %tbody
-          %tr
-            %th Peak (dB FS)
-            %th RMS (dB RMS)
-            %th Flat Factor
-            %th Crest Factor
-            %tr
-              %td= results[2][:peak]
-              %td= results[2][:rms]
-              %td= results[2][:flat]
-              %td= results[2][:crest]
-      %br
-      %br
-      - if results[0][:pass] == false
-        = "THIS TRACK DID NOT PASS. We cannot auto-master this file yet."
-      %br
-      %h3= results[4]
-      %br
-      %br
+    #wrapper
+      #header
+        %h1 Audio Validation Results
+        %br
+        %br
+      #content
+        - @tracks.each do |results|
+          %h1= results[3]
+          %h1= results[0][:name]
+          %br
+          %h2 GENERAL
+          %table{:display => 'inline-block', :border => 1}
+            %tbody
+              %tr
+                %th File
+                %th Score
+                %th Passed?
+                %tr
+                  %td= results[0][:name]
+                  %td= results[0][:score]
+                  %td= results[0][:pass]
+          %h2 ENCODING MEASUREMENTS
+          %table{:display => 'inline-block', :border => 1}
+            %tbody
+              %tr
+                %th Bit Depth
+                %th Sampling Frequency
+                %th Channel Count
+                %th Lossless?
+                %tr
+                  %td= results[1][:depth]
+                  %td= results[1][:rate]
+                  %td= results[1][:channels]
+                  %td= results[1][:lossless]
+          %h2 AUDIO MEASUREMENTS
+          %table{:display => 'inline-block', :border => 1}
+            %tbody
+              %tr
+                %th Peak (dB FS)
+                %th RMS (dB RMS)
+                %th Flat Factor
+                %th Crest Factor
+                %tr
+                  %td= results[2][:peak]
+                  %td= results[2][:rms]
+                  %td= results[2][:flat]
+                  %td= results[2][:crest]
+          //- if results[0][:pass] == false
+          //  = "THIS TRACK DID NOT PASS. We cannot auto-master this file yet."
+          %br
+          %h2= results[4]
+          %br
+          %br

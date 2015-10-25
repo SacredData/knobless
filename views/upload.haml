@@ -1,15 +1,29 @@
 %html
+  %head
+    %title ListenUp Audiobook Validator
+    %link(rel="stylesheet" href="http://yui.yahooapis.com/2.8.0r4/build/reset/reset-min.css")
+    %link(rel="stylesheet" href="css/style.css")
   %body
-    %center
-    %h1 ListenUp Audiobook Validator
-    To validate your audio, simply select one or more files, then click the Upload button. Please be sure to upload WAV or FLAC audio for best results!
-    %br
-    A score of 40 or higher indicates a passing grade.
-    %br
-    %br
-    %form(method="post" enctype='multipart/form-data')
-      %input{:type => "file", :multiple => "true", :name => "myfiles[]"}
-      %br
-      %br
-      %input(type='submit' value='Upload!')
-      %br
+    #wrapper
+      #header
+        %h1 ListenUp Audiobook Validator
+        %br
+        %br
+        %h2 To validate your audio, simply select one or more files, then click the Upload button.
+        %br
+        %h2 A score of 40 or higher indicates a passing grade.
+        %br
+        %br
+        Please be sure to upload WAV or FLAC audio for best results!
+        %br
+        %br
+        %br
+        %br
+        %br
+      #content
+        %form(method="post" enctype='multipart/form-data')
+          %input{:type => "file", :multiple => "true", :name => "myfiles[]"}
+          %br
+          %br
+          %input(type='submit' value='Upload!')
+          %br
