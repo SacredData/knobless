@@ -1,0 +1,72 @@
+#wrapper{
+    width:66%;
+    margin:auto;
+}
+ 
+#header{
+    text-align: center;
+    font-family: "droid-sans-mono-1","droid-sans-mono-2", monaco, courier, monospace;
+}
+ 
+#header>h1{
+    font-size:200%;
+}
+ 
+h2{
+    font-size:130%;
+    font-family:sans-serif;
+}
+
+#content{
+    font-family: monaco, courier, monospace;
+    margin:12px 0;
+    float:left;
+}
+ 
+#body{
+    text-align: center;
+    font-family: "droid-sans-mono-1","droid-sans-mono-2", monaco, courier, monospace;
+    margin: 0;
+    padding: 0;
+    background: #000;
+}
+
+#side_bar{
+    margin:12px 0;
+    width :30%;
+    float:right;
+    clear:none;
+    background-color:#ddd;
+}
+ 
+h1{
+    font-size:150%;
+}
+ 
+#footer{
+    clear:both;
+    background-color:#ade;
+    font-size:75%;
+    font-family:sans-serif;
+    color:#333;
+    border-top:solid 1px #69a;
+}
+ 
+ol{
+    padding-top:20px;
+    background-color:#ade;
+    display:block;
+}
+ 
+li{
+    color:white;
+    text-align:center;
+    display:inline;
+    padding:5px 10px 0 10px;
+    margin-right:2px;
+    background-color: #69a;
+}
+ 
+a{
+    text-decoration:none;
+}
