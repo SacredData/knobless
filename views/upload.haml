@@ -3,6 +3,7 @@
     %title ListenUp Audiobook Validator
     %link(rel="stylesheet" href="http://yui.yahooapis.com/2.8.0r4/build/reset/reset-min.css")
     %link(rel="stylesheet" href="css/style.css")
+    %link(rel="stylesheet" href="css/bar.css")
   %body
     #wrapper
       #header
@@ -27,3 +28,38 @@
           %br
           %input(type='submit' value='Upload!')
           %br
+        <div class="progress">
+        <div class="bar"></div >
+        <div class="percent">0%</div >
+        </div>
+        <div id="status"></div>
+        %script{:type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"}
+        %script{:type => "text/javascript", :src => "http://malsup.github.com/jquery.form.js"}
+        :javascript
+          (function() {
+            var bar = $('.bar');
+            var percent = $('.percent');
+            var status = $('#status');
+            $('form').ajaxForm({
+                beforeSend: function() {
+                    status.empty();
+                    var percentVal = '0%';
+                    bar.width(percentVal)
+                    percent.html(percentVal);
+                },
+                uploadProgress: function(event, position, total, percentComplete) {
+                    var percentVal = percentComplete + '%';
+                    bar.width(percentVal)
+                    percent.html(percentVal);
+                //console.log(percentVal, position, total);
+                },
+                success: function() {
+                    var percentVal = '100%';
+                    bar.width(percentVal)
+                    percent.html(percentVal);
+                },
+              complete: function(xhr) {
+                status.html(xhr.responseText);
+              }
+            }); 
+          })();
