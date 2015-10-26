@@ -5,6 +5,7 @@ require "sinatra"
 require "tempfile"
 require "json"
 require "./lib/knob"
+require "./lib/master"
 
 set :bind, '0.0.0.0'
 
@@ -22,6 +23,7 @@ post "/upload" do
       path     = Pathname.new(file[:tempfile])
       name     = file[:filename]
       upfile   = File.open(path)
+      fulldir  = "#{path.dirname}/#{path.basename}"
       unless upfile.none?
         k   = Knob.new("#{path.dirname}/#{path.basename}",name)
         msg = k.scan
@@ -69,7 +71,7 @@ post "/upload" do
           @issues_str += "(We will fix this for you. No action is required.) " if @issues.length < 2
         end
       end
-      @gen         = {:name => @source_name, :pass => @pass, :score => @score}
+      @gen         = {:file => fulldir, :name => @source_name, :pass => @pass, :score => @score}
       # ENCODING INFORMATION
       @encdata     = jmsg["enc"]
       @depth       = @encdata["sample_depth"]
@@ -91,6 +93,15 @@ post "/upload" do
   @tracks.each do |track_info|
     puts track_info
     puts "..."
+    if track_info[0][:pass] == true
+      puts "Beginning AutoMaster!"
+      jstats = track_info[2].to_json
+      m = MasterKnob.new(track_info[0][:file], jstats)
+      m.analyze
+      m.construct1
+      m.construct2
+      puts "AutoMaster complete!"
+    end
   end
   haml :results
 end
