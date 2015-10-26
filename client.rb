@@ -4,6 +4,7 @@ require "bundler/setup"
 require "sinatra"
 require "tempfile"
 require "json"
+require "time"
 require "./lib/knob"
 
 set :bind, '0.0.0.0'
@@ -14,7 +15,9 @@ end
 
 post "/upload" do
   tries,counter = 0,0
-  @tracks = []
+  @tracks  = {}
+  @list = []
+  session_time = Time.now
   params[:myfiles].each { |file|
     counter += 1
     begin
@@ -85,14 +88,22 @@ post "/upload" do
       @peak        = @statsdata["peak"]
       @rms         = @statsdata["rms"]
       @stats       = {:peak => @peak, :rms => @rms, :flat => @flat, :crest => @crest}
-      @tracks.push([@gen, @enc, @stats, counter, @issues_str])
+      # @tracks.push([@gen, @enc, @stats, counter, @issues_str])
+      @tracks["#{@source_name}"] = { :general => @gen, :encoding => @enc, :stats => @stats,
+                                  :counter => counter, :issues   => @issues }
+      @list.push({:file => "#{@source_name}", :passed => @pass})
     end
   }
-  @tracks.each do |track_info|
-    puts track_info
-    puts "..."
-  end
-  haml :results
+  
+  # @tracks.each do |track_info|
+  #   puts track_info
+  #   puts "..."
+  # end
+
+  # @validation_msg = {:session => session_time, :files => @tracks}.to_json
+  @tracks_msg = @list.to_json
+  puts JSON.pretty_generate(@list)
+  # haml :results2
 end
 
 get "/hi" do
