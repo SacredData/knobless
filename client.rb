@@ -66,9 +66,10 @@ post "/upload" do
           @issues_str += "#{issue_count}: [RMS ERROR] This file's RMS is too high. Please reduce levels to achieve an ideal dynamic range. "
         end
         if issue =~ /peaks/
-          issue_count += 1
-          @issues_str += "#{issue_count}: [PEAK ERROR] This file is peaking above -3.0 dBFS. "
-          @issues_str += "(We will fix this for you. No action is required.) " if @issues.length < 2
+          if @issues.length >= 2
+            issue_count += 1
+            @issues_str += "#{issue_count}: [PEAK ERROR] This file is peaking above -3.0 dBFS. "
+          end
         end
       end
       @gen         = {:file => fulldir, :name => @source_name, :pass => @pass, :score => @score}
