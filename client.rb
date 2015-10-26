@@ -94,15 +94,14 @@ post "/upload" do
   @tracks.each do |track_info|
     puts track_info
     puts "..."
-    if track_info[0][:pass] == true
-      puts "Beginning AutoMaster!"
-      jstats = track_info[2].to_json
-      m = MasterKnob.new(track_info[0][:file], jstats)
-      m.analyze
-      m.construct1
-      m.construct2
-      puts "AutoMaster complete!"
-    end
+    # AUTOMASTER #
+    puts "Beginning AutoMaster!"
+    jstats = track_info[2].to_json
+    m = MasterKnob.new(track_info[0][:file], jstats)
+    m.analyze
+    m.construct1
+    m.construct2
+    puts "AutoMaster complete!"
   end
   haml :results
 end

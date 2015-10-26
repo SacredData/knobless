@@ -32,7 +32,7 @@ class Knob
     @enc = {:sample_encoding => "#{encCmd[5]}".to_i, :sample_depth => "#{encCmd[5]}".to_i, 
      :sample_rate => "#{encCmd[2]}".to_i, :channels => "#{encCmd[3]}".to_i, :lossless => @lossless}
     # Audio dynamics measurement scanning
-    statsCmd = `sox "#{@file_path}" -n stats 2>&1`
+    statsCmd = `sox "#{@file_path}" -n stats spectrogram -o "public/spectrogram/#{@source}.png" 2>&1`
     @seconds = "#{statsCmd.split("\n")[-3]}".match(/\d+.\d+/)[0].to_f   # length in seconds
     @flat    = "#{statsCmd.split("\n")[-7]}".match(/\d+.\d+/)[0].to_f   # number of samples that hit 0dBFS
     @crest   = "#{statsCmd.split("\n")[-8]}".match(/\d+.\d+/)[0].to_f   # peak-to-RMS ratio
