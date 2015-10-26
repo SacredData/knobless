@@ -1,0 +1,35 @@
+%html
+  %head
+    %title Validation Results
+    %link(rel="stylesheet" href="http://yui.yahooapis.com/2.8.0r4/build/reset/reset-min.css")
+    %link(rel="stylesheet" href="css/style.css")
+    %script{:type => "text/javascript", :src  => "js/test.js"}
+    %script{:type => "text/javascript", :src  => "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"}
+    %script{:type => "text/javascript", :src  => "https://s3.amazonaws.com/dynatable-docs-assets/js/jquery.dynatable.js"}
+    %link(rel="stylesheet" href="https://s3.amazonaws.com/dynatable-docs-assets/css/jquery.dynatable.css")
+  %body
+    #wrapper
+      #header
+        %h1 Audio Validation Results
+        %br
+        %br
+      #content
+        <table id="my-final-table">
+          <thead>
+            <th>File</th>
+            <th>Passed</th>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <script id="results">
+        [
+          {
+              "file": "0.wav",
+              "passed": false
+          },{
+              "file": "1.wav",
+              "passed": true
+          }
+        ]
+        </script>

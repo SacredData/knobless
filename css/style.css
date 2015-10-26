@@ -20,7 +20,7 @@ h2{
 #content{
     font-family: monaco, courier, monospace;
     margin:12px 0;
-    float:left;
+    float:center;
 }
  
 #body{
@@ -32,11 +32,16 @@ h2{
 }
 
 #side_bar{
+    font-family: "droid-sans-mono-1","droid-sans-mono-2", monaco, courier, monospace;
     margin:12px 0;
     width :30%;
     float:right;
     clear:none;
-    background-color:#ddd;
+    background-color:#eee;
+}
+
+#side_bar>h1{
+    font-size:130%;
 }
  
 h1{
