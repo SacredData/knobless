@@ -92,19 +92,12 @@ post "/upload" do
     end
   }
   @tracks.each do |track_info|
+    track_json = track_info[2].to_json
+    File.open("public/data/#{track_info[0][:name]}.json", "w") { |file| file.write(track_json) }
     puts track_info
     puts "..."
-    # AUTOMASTER # - NOT READY FOR MASTER BRANCH RELEASE!!!
-    puts "Beginning AutoMaster!"
-    jstats = track_info[2].to_json
-    m = MasterKnob.new(track_info[0][:file], jstats)
-    m.analyze
-    m.construct1
-    @file_to_copy = m.construct2
-    @file_to_send = "#{track_info[0][:name]}.AM.wav"
-    FileUtils.cp("#{@file_to_copy}", "public/masters/#{@file_to_send}")
-    puts "AutoMaster complete!"
-    # send_file "public/masters/#{@file_to_send}"
+    FileUtils.cp("#{track_info[0][:file]}", "public/uploads/#{track_info[0][:name]}")
+    puts "File moved to storage."
   end
   haml :results
 end
@@ -114,5 +107,18 @@ get "/hi" do
 end
 
 get '/automaster/:filename' do |filename|
+  # AUTOMASTER # - NOT READY FOR MASTER BRANCH RELEASE!!!
+  puts "Beginning AutoMaster of #{filename}!"
+  jdata  = open("public/data/#{filename}.json", "r")
+  jstats = jdata.read
+  jmsg = JSON.parse("#{jstats}")
+  jjson = jmsg.to_json
+  m = MasterKnob.new("public/uploads/#{filename}", jjson)
+  m.analyze
+  m.construct1
+  @file_to_copy = m.construct2
+  @file_to_send = "#{filename}.AM.wav"
+  FileUtils.cp("#{@file_to_copy}", "public/masters/#{@file_to_send}")
+  puts "AutoMaster complete!"
   send_file "./public/masters/#{filename}.AM.wav", :filename => "#{filename}.AM.wav", :type => 'Application/octet-stream'
 end

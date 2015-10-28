@@ -54,7 +54,8 @@
                 success: function() {
                     var percentVal = '100%';
                     bar.width(percentVal)
-                    percent.html(percentVal);
+                    var theText = percentVal + ' AUTOMASTERING';
+                    percent.html(theText);
                 },
               complete: function(xhr) {
                 status.html(xhr.responseText);
