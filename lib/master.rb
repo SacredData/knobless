@@ -56,5 +56,6 @@ class MasterKnob
             `sox #{@audio_path.realpath}.fix.wav #{@audio_path.realpath}.final.wav gain -l #{crest_fix}`
             puts "SoX CMD 3 - Complete"
         end
+        return "#{@audio_path.realpath}.final.wav"
     end
 end

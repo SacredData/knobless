@@ -95,17 +95,24 @@ post "/upload" do
     puts track_info
     puts "..."
     # AUTOMASTER # - NOT READY FOR MASTER BRANCH RELEASE!!!
-    # puts "Beginning AutoMaster!"
-    # jstats = track_info[2].to_json
-    # m = MasterKnob.new(track_info[0][:file], jstats)
-    # m.analyze
-    # m.construct1
-    # m.construct2
-    # puts "AutoMaster complete!"
+    puts "Beginning AutoMaster!"
+    jstats = track_info[2].to_json
+    m = MasterKnob.new(track_info[0][:file], jstats)
+    m.analyze
+    m.construct1
+    @file_to_copy = m.construct2
+    @file_to_send = "#{track_info[0][:name]}.AM.wav"
+    FileUtils.cp("#{@file_to_copy}", "public/masters/#{@file_to_send}")
+    puts "AutoMaster complete!"
+    # send_file "public/masters/#{@file_to_send}"
   end
   haml :results
 end
 
 get "/hi" do
   "Hello world!"
+end
+
+get '/automaster/:filename' do |filename|
+  send_file "./public/masters/#{filename}.AM.wav", :filename => "#{filename}.AM.wav", :type => 'Application/octet-stream'
 end
