@@ -99,7 +99,7 @@ post "/upload" do
     FileUtils.cp("#{track_info[0][:file]}", "public/uploads/#{track_info[0][:name]}")
     puts "File moved to storage."
   end
-  haml :results
+  haml :results2
 end
 
 get "/hi" do
