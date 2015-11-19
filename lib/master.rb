@@ -7,7 +7,6 @@ class MasterKnob
         @audio_file = File.open("#{audio}","r")
         @stats = JSON.parse(stats)
         @audio_path = Pathname.new(@audio_file.path)
-        # @levelvals  = {:flat => 1.0, :crest => 6.0, :peak => -3.0, :rms => -16.0}
         puts "Ready to master audio!"
     end
     def analyze
@@ -28,7 +27,7 @@ class MasterKnob
         puts "SoX arguments: #{@steps}"
     end
     def construct1
-        sinc1 = "sinc 50-14k"
+        sinc1 = "sinc 50-14k" # high-pass at 50Hz, low-pass at 14kHz
         sox_cmd1 = "sox #{@audio_path.realpath} #{@audio_path.realpath}.lev.wav #{sinc1} "
         if @steps["gain"].nil? == false
             sox_cmd1 += "gain "
