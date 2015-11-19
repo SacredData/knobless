@@ -1,0 +1,17 @@
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+#Media files
+*.wav
+*.mp3
+*.ogg
+*.opus
+*.wma
+*.flac
+*.aac
+*.aiff
+*.aif
+
+#Images
+*.png
