@@ -12,7 +12,7 @@ class Knob
                   [44100,48000,96000], :channels => [1,2]}
     @issues     = []
   end
-  attr_reader :file, :file_path, :file_score
+  attr_reader :file_path, :file_score
   def scan
     # Audio encoding compliance scanning
     counter      = 1
