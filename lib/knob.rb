@@ -4,8 +4,7 @@ require "json"
 
 class Knob
   def initialize(wavfile,source)
-    @file       = File.open("#{wavfile}","r")
-    @file_path  = Pathname.new(@file.path)
+    @file_path  = Pathname.new(File.open("#{wavfile}","r"))
     @source     = source
     @file_score = 0
     @levelvals  = {:flat => 1.0,   :crest => 6.0, :peak => -3.0, :rms => -16.0}
@@ -13,7 +12,7 @@ class Knob
                   [44100,48000,96000], :channels => [1,2]}
     @issues     = []
   end
-  attr_reader :file, :file_path, :file_score
+  attr_reader :file_path, :file_score
   def scan
     # Audio encoding compliance scanning
     counter      = 1

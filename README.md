@@ -1,15 +1,15 @@
 # clientknob
 A lossless audio streaming utility that connects a mastering studio with its clients via real-time audio feedback sessions.
 
-## Audio Pre-Master Scoring
+## Getting Started
 
 To get a ClientKnob server up and running is a rather simple process. After cloning this repo, do the following:
 
 ```
-bundle install
+bundle install --path .bundle
 ```
 
-This will install all necessary deps.
+This will install all necessary gems. If you have issues installing the gems, you may need some development tools and libraries. Debian/Ubuntu users should be able to resolve any issues by running `apt-get install ruby-dev`. Arch users can run `pacman -S base-devel`, making sure to select the *ALL* option if prompted to do so.
 
 ```
 bundle exec unicorn
