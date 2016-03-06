@@ -4,10 +4,10 @@ require "json"
 
 class MasterKnob
     def initialize(audio,stats)
+        KnobLog.log.info "New mastering request initializing..."
         @audio_file = File.open("#{audio}","r")
         @stats = JSON.parse(stats)
         @audio_path = Pathname.new(@audio_file.path)
-        puts "Ready to master audio!"
     end
     def analyze
         @steps = {}
@@ -25,7 +25,7 @@ class MasterKnob
             peak_delta = @stats["peak"].abs - 3
             @steps["gain"] = "#{peak_delta}".to_f
         end
-        puts "SoX arguments: #{@steps}"
+        KnobLog.log.info "SoX arguments: #{@steps}"
     end
     def construct1
         # High-pass at 50Hz, low-pass at 14kHz
@@ -39,15 +39,15 @@ class MasterKnob
             sox_cmd1 += "norm #{@steps["norm"]}"
         end
         `#{sox_cmd1}`
-        puts "SoX CMD 1 - Complete"
+        KnobLog.log.info "SoX CMD 1 - Complete"
     end
     def construct2
         # Run SoX compander on leveled audio file
         sox_cmd2 = "sox #{@audio_path.realpath}.lev.wav #{@audio_path.realpath}.fix.wav gain -h "
-        drc = @stats["rms"] || "-20"
+        drc = @stats["rms"] || "-20"  # Set to -20 in case something goes wrong
         sox_cmd2 += "compand 0.02,0.2 6:-40,-30,#{drc} -10 -6 0.2 norm 0"
         `#{sox_cmd2}`
-        puts "SoX CMD 2 - Complete"
+        KnobLog.log.info "SoX CMD 2 - Complete"
         # Check the crest factor for the resulting file
         crest_check = `sox #{@audio_path.realpath}.fix.wav -n stats 2>&1`
         crest_now   = crest_check.split("\n")[-8].match(/\d+.\d+/)[0].to_f
@@ -55,9 +55,9 @@ class MasterKnob
         # Check if final file meets spec. If not, process once more.
         if crest_now > 7.5
             crest_fix = crest_now - 6.5
-            puts "Crest is low, running a final gain boost."
+            KnobLog.log.info "Crest is low, running a final gain boost."
             `sox #{@audio_path.realpath}.fix.wav #{@audio_path.realpath}.final.wav gain -l #{crest_fix}`
-            puts "SoX CMD 3 - Complete"
+            KnobLog.log.info "SoX CMD 3 - Complete"
             final_audio_file = "#{@audio_path.realpath}.final.wav"
         end
         return final_audio_file
