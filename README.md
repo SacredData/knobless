@@ -4,7 +4,9 @@ A lightweight Sinatra app that QCs and auto-masters spoken word audio recordings
 
 ## Getting Started
 
-To get a Knobless server up and running is a rather simple process. After cloning this repo, do the following:
+To get a Knobless server up and running is a rather simple process. First and foremost, ensure that you have all dependencies on your system. You'll need a modern version of the SoX utility, compiled with support for all audio formats. Ubuntu/Debian users should run `apt-get install sox libsoxfmt-all` if they're unsure.
+
+Once you've acquired SoX and all accompanying tools/libraries, clone the repo. After cloning the repo, navigate to the project directory's top layer and do the following:
 
 ```
 bundle install --path .bundle
@@ -35,7 +37,6 @@ When the process is complete, a new page will appear with a QC report and an opt
 * Try to always upload uncompressed audio. WAV is strongly encouraged when possible - FLAC is probably fine, too. Avoid MP3s!
 
 * Upload mono audio whenever possible. Stereo really isn't necessary for most spoken word audio productions. If you are one of the few that requires stereo, just know that there is a slightly higher chance of processing failure.
-
 
 ## Todo
 
