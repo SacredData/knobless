@@ -1,10 +1,10 @@
-# clientknob
+# Knobless
 
-A lightweight Sinatra app that QCs and auto-masters spoken word audio recordings.
+A lightweight Sinatra app that QCs and auto-masters spoken word audio recordings. Get knobs and faders out of your life, once and for all!
 
 ## Getting Started
 
-To get a ClientKnob server up and running is a rather simple process. After cloning this repo, do the following:
+To get a Knobless server up and running is a rather simple process. After cloning this repo, do the following:
 
 ```
 bundle install --path .bundle
@@ -22,7 +22,7 @@ I, [2015-08-08T15:42:22.824669 #30245]  INFO -- : Refreshing Gem list
 I, [2015-08-08T15:42:22.865683 #30245]  INFO -- : worker=0 ready
 ```
 
-This will start a new Unicorn server at `0.0.0.0:8080`. Launch a new web browser and point it to `0.0.0.0:8080/upload` to see your Audio QC upload form!
+This will start a new Unicorn server at `0.0.0.0:8080`. Launch a new web browser and point it to `0.0.0.0:8080/upload` to see your audio upload form!
 
 ## Usage
 
