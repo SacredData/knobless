@@ -15,4 +15,9 @@
 
 #Images
 *.png
+
+#Dirs
 .bundle
+
+#Other
+*.json
