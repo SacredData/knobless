@@ -35,3 +35,11 @@ When the process is complete, a new page will appear with a QC report and an opt
 * Try to always upload uncompressed audio. WAV is strongly encouraged when possible - FLAC is probably fine, too. Avoid MP3s!
 
 * Upload mono audio whenever possible. Stereo really isn't necessary for most spoken word audio productions. If you are one of the few that requires stereo, just know that there is a slightly higher chance of processing failure.
+
+
+## Todo
+
+* Setup a database - probably Mongo
+
+* Implement a logger - in progress
+
