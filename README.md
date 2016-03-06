@@ -43,3 +43,5 @@ When the process is complete, a new page will appear with a QC report and an opt
 
 * Implement a logger - in progress
 
+* Make the interface not look so unbelievably shitty
+
