@@ -51,13 +51,15 @@ class MasterKnob
         # Check the crest factor for the resulting file
         crest_check = `sox #{@audio_path.realpath}.fix.wav -n stats 2>&1`
         crest_now   = crest_check.split("\n")[-8].match(/\d+.\d+/)[0].to_f
-        # Process the file again if it doesn't meet spec
+        final_audio_file = "#{@audio_path.realpath}.fix.wav"
+        # Check if final file meets spec. If not, process once more.
         if crest_now > 7.5
             crest_fix = crest_now - 6.5
             puts "Crest is low, running a final gain boost."
             `sox #{@audio_path.realpath}.fix.wav #{@audio_path.realpath}.final.wav gain -l #{crest_fix}`
             puts "SoX CMD 3 - Complete"
+            final_audio_file = "#{@audio_path.realpath}.final.wav"
         end
-        return "#{@audio_path.realpath}.final.wav"
+        return final_audio_file
     end
 end
