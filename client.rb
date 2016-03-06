@@ -6,14 +6,17 @@ require "tempfile"
 require "json"
 require "./lib/knob"
 require "./lib/master"
+require "./lib/logging"
 
 set :bind, '0.0.0.0'
 
 get "/upload" do
+  KnobLog.log.info "Upload endpoint accessed!"
   haml :upload
 end
 
 post "/upload" do
+  KnobLog.log.info "Upload beginning"
   tries,counter = 0,0
   @tracks = []
   params[:myfiles].each { |file|
@@ -25,12 +28,13 @@ post "/upload" do
       upfile   = File.open(path)
       fulldir  = "#{path.dirname}/#{path.basename}"
       unless upfile.none?
+        KnobLog.log.info "Starting analysis of #{name}"
         k   = Knob.new("#{path.dirname}/#{path.basename}",name)
         msg = k.scan
-        puts "File #{counter}: #{path} ---- SCANNED"
+        KnobLog.log.info "File #{counter}: #{path} ---- SCANNED"
       end
     rescue Exception => e
-      puts e
+      KnobLog.log.info e
       retry while tries < 5
     ensure
       k = nil
