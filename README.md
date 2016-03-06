@@ -40,11 +40,15 @@ When the process is complete, a new page will appear with a QC report and an opt
 
 * Upload mono audio whenever possible. Stereo really isn't necessary for most spoken word audio productions. If you are one of the few that requires stereo, just know that there is a slightly higher chance of processing failure.
 
+## Contributing
+
+I readily admit that I am not very versed in the dark art of front-end design. My app doesn't look particularly good and the "user experience" is generally poor. Though useful, I think the app's garish appearance may scare away many people who could benefit from using it. If anybody is interested in contributing code to improve this, or anything else for that matter, I welcome you to send a pull request! I'll buy you a nice six-pack for your efforts. :)
+
 ## Todo
 
-* Setup a database - probably Mongo
+* Implement a green-red-yellow coloring system for applicable metrics in the analysis table.
 
-* Implement a logger - in progress
+* Setup a database - probably Mongo
 
 * Make the interface not look so unbelievably shitty
 
