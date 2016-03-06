@@ -111,8 +111,7 @@ get "/hi" do
 end
 
 get '/automaster/:filename' do |filename|
-  # AUTOMASTER # - NOT READY FOR MASTER BRANCH RELEASE!!!
-  puts "Beginning AutoMaster of #{filename}!"
+  KnobLog.log.info "AutoMaster requested for #{filename}"
   jdata  = open("public/data/#{filename}.json", "r")
   jstats = jdata.read
   jmsg = JSON.parse("#{jstats}")
@@ -123,6 +122,6 @@ get '/automaster/:filename' do |filename|
   @file_to_copy = m.construct2
   @file_to_send = "#{filename}.AM.wav"
   FileUtils.cp("#{@file_to_copy}", "public/masters/#{@file_to_send}")
-  puts "AutoMaster complete!"
+  KnobLog.log.info "AutoMaster of #{filename} completed"
   send_file "./public/masters/#{filename}.AM.wav", :filename => "#{filename}.AM.wav", :type => 'Application/octet-stream'
 end
