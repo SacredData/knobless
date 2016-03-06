@@ -14,6 +14,8 @@ bundle install --path .bundle
 
 This will install all necessary gems. If you have issues installing the gems, you may need some development tools and libraries. Debian/Ubuntu users should be able to resolve any issues by running `apt-get install ruby-dev`. Arch users can run `pacman -S base-devel`, making sure to select the *ALL* option if prompted to do so.
 
+Once all your gems are installed, simply run a `bundle exec unicorn` at the top level of the repo directory.
+
 ```
 bundle exec unicorn
 I, [2015-08-08T15:42:22.823660 #30242]  INFO -- : listening on addr=0.0.0.0:8080 fd=9
