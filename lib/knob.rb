@@ -4,6 +4,7 @@ require "json"
 
 class Knob
   def initialize(wavfile,source)
+    KnobLog.log.info "Initializing audio file analysis..."
     @file_path  = Pathname.new(File.open("#{wavfile}","r"))
     @source     = source
     @file_score = 0
@@ -20,7 +21,7 @@ class Knob
     encCmd       = []
     soxi_checks.each do |cmd|
       encCmd[counter] = `soxi #{cmd} "#{@file_path}"`
-      puts "#{counter}: #{encCmd[counter]}"
+      KnobLog.log.info "#{counter}: #{encCmd[counter]}"
       counter += 1
     end
     if encCmd[1] =~ /(wav|flac|aif|aiff)/
@@ -46,6 +47,7 @@ class Knob
   end
   attr_reader :enc, :stats
   def score
+    KnobLog.log.info "Initializing audio file scoring..."
     # Audio encoding evaluation
     @file_score += 10 if @lossless == true
     @file_score += 10 if

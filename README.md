@@ -14,6 +14,8 @@ bundle install --path .bundle
 
 This will install all necessary gems. If you have issues installing the gems, you may need some development tools and libraries. Debian/Ubuntu users should be able to resolve any issues by running `apt-get install ruby-dev`. Arch users can run `pacman -S base-devel`, making sure to select the *ALL* option if prompted to do so.
 
+Once all your gems are installed, simply run a `bundle exec unicorn` at the top level of the repo directory.
+
 ```
 bundle exec unicorn
 I, [2015-08-08T15:42:22.823660 #30242]  INFO -- : listening on addr=0.0.0.0:8080 fd=9
@@ -38,11 +40,15 @@ When the process is complete, a new page will appear with a QC report and an opt
 
 * Upload mono audio whenever possible. Stereo really isn't necessary for most spoken word audio productions. If you are one of the few that requires stereo, just know that there is a slightly higher chance of processing failure.
 
+## Contributing
+
+I readily admit that I am not very versed in the dark art of front-end design. My app doesn't look particularly good and the "user experience" is generally poor. Though useful, I think the app's garish appearance may scare away many people who could benefit from using it. If anybody is interested in contributing code to improve this, or anything else for that matter, I welcome you to send a pull request! I'll buy you a nice six-pack for your efforts. :)
+
 ## Todo
 
-* Setup a database - probably Mongo
+* Implement a green-red-yellow coloring system for applicable metrics in the analysis table.
 
-* Implement a logger - in progress
+* Setup a database - probably Mongo
 
 * Make the interface not look so unbelievably shitty
 
