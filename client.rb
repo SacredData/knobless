@@ -31,6 +31,7 @@ post "/upload" do
         KnobLog.log.info "Starting analysis of #{name}"
         k   = Knob.new("#{path.dirname}/#{path.basename}",name)
         msg = k.scan
+        raise if msg == false
         KnobLog.log.info "File #{counter}: #{path} ---- SCANNED"
       end
     rescue Exception => e

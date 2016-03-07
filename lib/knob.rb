@@ -25,9 +25,11 @@ class Knob
       counter += 1
     end
     if encCmd[1] =~ /(wav|flac|aif|aiff)/
-      @lossless = true
+      @lossless, @valid = true, true
+    elsif encCmd[1] =~ /(ogg|opus|mp3|m4a|wma|aac)/
+      @lossless, @valid = false, true
     else
-      @lossless = false
+      raise Exception.new("Not a valid file.")
     end
     @enc = {:sample_encoding => "#{encCmd[5]}".to_i, :sample_depth => "#{encCmd[5]}".to_i,
             :sample_rate => "#{encCmd[2]}".to_i, :channels => "#{encCmd[3]}".to_i, :lossless => @lossless}
