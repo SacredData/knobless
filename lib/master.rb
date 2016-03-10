@@ -1,6 +1,5 @@
 # master.rb
 require "pathname"
-require "json"
 
 class MasterKnob
     def initialize(audio,stats)
